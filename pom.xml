@@ -24,10 +24,53 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.10.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>cz.habarta.typescript-generator</groupId>
+				<artifactId>typescript-generator-maven-plugin</artifactId>
+				<version>2.24.612</version>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<phase>process-classes</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<jsonLibrary>jackson2</jsonLibrary>
+					<classes>
+						<class>com.example.demo.dto.CompanyDto</class>
+					</classes>
+					<outputFile>target/company.ts</outputFile>
+					<outputKind>module</outputKind>
+					<outputFileType>implementationFile</outputFileType>
+					<mapClasses>asClasses</mapClasses>
+					<mapEnum>asEnum</mapEnum>
+					<nonConstEnums>true</nonConstEnums>
+					<optionalProperties>useLibraryDefinition</optionalProperties>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
